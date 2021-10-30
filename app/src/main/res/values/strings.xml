@@ -18,7 +18,7 @@
     <string name="comming_soon">Comming Soon</string>
     <string name="empty_data">You need to put a correct credentials info</string>
     <string name="invalide_login_data">Invalide login data</string>
-    
+
     <string name="first_fragment_label">Call 911</string>
     <string name="second_fragment_label">Second Fragment</string>
 </resources>

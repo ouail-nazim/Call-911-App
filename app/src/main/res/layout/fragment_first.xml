@@ -115,4 +115,5 @@
             android:layout_margin="20dp"
             android:src="@drawable/twitter"/>
     </LinearLayout>
+
 </RelativeLayout>
