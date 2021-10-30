@@ -42,29 +42,35 @@ public class FirstFragment extends Fragment {
                 if (email.equals("") || password.equals("")) {
                     alert.setMessage(R.string.empty_data)
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {}
+                                public void onClick(DialogInterface dialog, int id) {
+                                }
                             })
                             .show();
-                }
-                else{
-                    if (!authAttempt(email,password)){
+                } else {
+                    if (!authAttempt(email, password)) {
                         alert.setMessage(R.string.invalide_login_data)
                                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {}
+                                    public void onClick(DialogInterface dialog, int id) {
+                                    }
                                 })
                                 .show();
-                    }else {
+                    } else {
                         makeLogin();
                     }
 
                 }
             }
         });
-        binding.forgotpass.setOnClickListener(new View.OnClickListener(){
+        binding.forgotpass.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 alert.setMessage(R.string.comming_soon).show();
-                //navigateTo(R.id.action_to_ForgotPasswordFragment);
+            }
+        });
+        binding.buttonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateTo(R.id.action_to_RegisterFragment);
             }
         });
     }
@@ -73,11 +79,13 @@ public class FirstFragment extends Fragment {
         NavHostFragment.findNavController(FirstFragment.this)
                 .navigate(resId);
     }
+
     private void makeLogin() {
         //TODO:create login, not just redirect to next page
         navigateTo(R.id.action_FirstFragment_to_SecondFragment);
     }
-    private boolean authAttempt(String email,String password) {
+
+    private boolean authAttempt(String email, String password) {
         if (email.equals("admin") || password.equals("admin")) {
             return true;
         }

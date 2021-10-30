@@ -4,23 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
-    tools:context=".FirstFragment">
+    android:padding="0dp"
+    android:layout_margin="0dp"
+    android:background="@color/app_primary"
+    tools:context=".RegisterFragment">
+    <!--page Title-->
     <TextView
         android:id="@+id/signin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="50dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="@string/sign_in"
+        android:text="@string/sign_up"
         android:textColor="@color/white"
         android:textSize="35dp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="59dp"
         tools:layout_editor_absoluteY="63dp" />
-    <!--Email input-->
+    <!--fist name input-->
     <EditText
-        android:id="@+id/input_email"
+        android:id="@+id/input_first_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/signin"
@@ -30,6 +34,57 @@
         android:layout_marginBottom="10dp"
         android:background="#30ffffff"
         android:drawableLeft="@drawable/ic_baseline_person_outline_24"
+        android:drawablePadding="20dp"
+        android:hint="@string/first_name"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+    <!--last name input-->
+    <EditText
+        android:id="@+id/input_last_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/input_first_name"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#30ffffff"
+        android:drawableLeft="@drawable/ic_baseline_person_outline_24"
+        android:drawablePadding="20dp"
+        android:hint="@string/last_name"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+    <!--phone number input-->
+    <EditText
+        android:id="@+id/input_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/input_last_name"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#30ffffff"
+        android:drawableLeft="@android:drawable/stat_sys_phone_call"
+        android:drawablePadding="20dp"
+        android:hint="@string/phone"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+    <!--Email input-->
+    <EditText
+        android:id="@+id/input_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/input_phone_number"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#30ffffff"
+        android:drawableLeft="@android:drawable/ic_dialog_email"
         android:drawablePadding="20dp"
         android:hint="@string/email"
         android:padding="20dp"
@@ -53,66 +108,49 @@
         android:padding="20dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
-    <!-- Login button    -->
+    <!-- sign up button    -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_login"
+        android:id="@+id/button_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/input_password"
-        android:text="@string/login"
-        android:backgroundTint="?attr/colorSecondaryVariant"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
-        />
-    <!-- Forgot password    -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/forgotpass"
-        android:layout_below="@id/button_login"
-        android:text="Forgot password?"
-        android:textColor="@color/white"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"/>
+        android:backgroundTint="?attr/colorSecondaryVariant"
+        android:text="@string/sign_up" />
     <!--socialicons-->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/others"
-        android:text="Sign up"
-        android:backgroundTint="@color/app_primary"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        />
     <TextView
         android:id="@+id/others"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/socialicons"
         android:layout_centerHorizontal="true"
-        android:text="or sign ip with" />
+        android:text="or sign ip with"
+        android:textColor="@color/white" />
     <LinearLayout
+        android:id="@+id/socialicons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/socialicons"
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:orientation="horizontal">
+
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="20dp"
-            android:src="@drawable/google"/>
+            android:src="@drawable/google" />
+
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="20dp"
-            android:src="@drawable/fb"/>
+            android:src="@drawable/fb" />
+
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="20dp"
-            android:src="@drawable/twitter"/>
+            android:src="@drawable/twitter" />
     </LinearLayout>
 </RelativeLayout>
