@@ -2,11 +2,14 @@ package com.example.learnapplication;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -41,19 +44,43 @@ public class SecondFragment extends Fragment {
 
     private FragmentSecondBinding binding;
 
+
+    //chek if the token i still valid
+    private boolean tokenExpired(String token) {
+        return false;
+    }
+
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String token = preferences.getString("Auth-Token", "");
+        // logout if the token is invalid
+        if (tokenExpired(token)) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+            alert.setMessage("Token Expired")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            action_logout();
+                        }
+                    })
+                    .show();
+        }
         binding = FragmentSecondBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
     }
+
+
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String token = preferences.getString("Auth-Token", "");
+
+        binding.textviewSecond.append(token);
 
         binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +94,25 @@ public class SecondFragment extends Fragment {
                 sendPostRequest();
             }
         });
+        binding.buttonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                action_logout();
+            }
+        });
+    }
+
+    private void action_logout() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("Auth-Token", "");
+        editor.apply();
+        navigateTo(R.id.action_SecondFragment_to_FirstFragment);
+    }
+
+    private void navigateTo(@IdRes int resId) {
+        NavHostFragment.findNavController(SecondFragment.this)
+                .navigate(resId);
     }
 
     // use Volley library to send api request

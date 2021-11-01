@@ -22,4 +22,5 @@
     <string name="first_fragment_label">Call 911</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="post_request">Post Request</string>
+    <string name="logout">Log out</string>
 </resources>

@@ -1,8 +1,11 @@
 package com.example.learnapplication;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +17,11 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.learnapplication.databinding.FragmentFirstBinding;
 
+import java.util.UUID;
+
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
-
 
     @Override
     public View onCreateView(
@@ -33,46 +37,58 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
         super.onViewCreated(view, savedInstanceState);
-        // on click sur login
-        binding.buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = binding.inputEmail.getText().toString();
-                String password = binding.inputPassword.getText().toString();
-                if (email.equals("") || password.equals("")) {
-                    alert.setMessage(R.string.empty_data)
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                }
-                            })
-                            .show();
-                } else {
-                    if (!authAttempt(email, password)) {
-                        alert.setMessage(R.string.invalide_login_data)
+        // check if user is logged in
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = preferences.edit();
+
+        String token = preferences.getString("Auth-Token", "");
+        if (!token.equalsIgnoreCase("")) {
+            navigateTo(R.id.action_FirstFragment_to_SecondFragment);
+        } else {
+            // on click sur login
+            binding.buttonLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String email = binding.inputEmail.getText().toString();
+                    String password = binding.inputPassword.getText().toString();
+                    if (email.equals("") || password.equals("")) {
+                        alert.setMessage(R.string.empty_data)
                                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                     }
                                 })
                                 .show();
                     } else {
-                        makeLogin();
-                    }
+                        String newToken = authAttempt(email, password);
+                        if (newToken.equalsIgnoreCase("")) {
+                            alert.setMessage(R.string.invalide_login_data)
+                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                        }
+                                    })
+                                    .show();
+                        } else {
+                            makeLogin(newToken);
+                        }
 
+                    }
                 }
-            }
-        });
-        binding.forgotpass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alert.setMessage(R.string.comming_soon).show();
-            }
-        });
-        binding.buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navigateTo(R.id.action_to_RegisterFragment);
-            }
-        });
+            });
+
+            binding.forgotpass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.setMessage(R.string.comming_soon).show();
+                }
+            });
+
+            binding.buttonRegister.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    navigateTo(R.id.action_to_RegisterFragment);
+                }
+            });
+        }
     }
 
     private void navigateTo(@IdRes int resId) {
@@ -80,16 +96,22 @@ public class FirstFragment extends Fragment {
                 .navigate(resId);
     }
 
-    private void makeLogin() {
-        //TODO:create login, not just redirect to next page
+    private void makeLogin(String token) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("Auth-Token", token);
+        editor.apply();
+
         navigateTo(R.id.action_FirstFragment_to_SecondFragment);
     }
 
-    private boolean authAttempt(String email, String password) {
+    private String authAttempt(String email, String password) {
+        //TODO: make api call to make login and return the token
+        String token = "Bearer " + UUID.randomUUID().toString();
         if (email.equals("admin") || password.equals("admin")) {
-            return true;
+            return token;
         }
-        return false;
+        return "";
     }
 
     @Override
