@@ -11,24 +11,18 @@
         tools:layout="@layout/fragment_first">
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            app:destination="@id/HomeFragment" />
         <action
             android:id="@+id/action_to_SettingsFragment"
             app:destination="@id/SettingsFragment" />
         <action
             android:id="@+id/action_to_RegisterFragment"
             app:destination="@id/RegisterFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.learnapplication.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/SettingsFragment"
         android:name="com.example.learnapplication.Settings"
@@ -45,6 +39,24 @@
         tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_registerd"
-            app:destination="@id/SecondFragment" />
+            app:destination="@id/HomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.example.learnapplication.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_logout"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MyAccountFragment"
+        android:name="com.example.learnapplication.MyAccountFragment"
+        tools:layout="@layout/fragment_my_account">
+        <action
+            android:id="@+id/action_logout"
+            app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>

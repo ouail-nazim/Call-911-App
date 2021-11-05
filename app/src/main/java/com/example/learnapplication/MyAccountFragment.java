@@ -6,12 +6,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.android.volley.AuthFailureError;
@@ -23,27 +25,18 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.learnapplication.databinding.FragmentSecondBinding;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
-public class SecondFragment extends Fragment {
+import com.example.learnapplication.databinding.FragmentMyAccountBinding;
 
-    private FragmentSecondBinding binding;
+public class MyAccountFragment extends Fragment {
 
+    private FragmentMyAccountBinding binding;
 
     //chek if the token i still valid
     private boolean tokenExpired(String token) {
@@ -68,11 +61,9 @@ public class SecondFragment extends Fragment {
                     })
                     .show();
         }
-        binding = FragmentSecondBinding.inflate(inflater, container, false);
+        binding = FragmentMyAccountBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
-
-
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -107,13 +98,9 @@ public class SecondFragment extends Fragment {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("Auth-Token", "");
         editor.apply();
-        navigateTo(R.id.action_SecondFragment_to_FirstFragment);
+        NavHostFragment.findNavController(this).navigate(R.id.action_logout);
     }
 
-    private void navigateTo(@IdRes int resId) {
-        NavHostFragment.findNavController(SecondFragment.this)
-                .navigate(resId);
-    }
 
     // use Volley library to send api request
     private void sendGetRequest() {

@@ -102,7 +102,7 @@ public class FirstFragment extends Fragment {
         editor.putString("Auth-Token", token);
         editor.apply();
 
-        navigateTo(R.id.action_FirstFragment_to_SecondFragment);
+        navigateTo(R.id.action_to_HomeFragment);
     }
 
     private String authAttempt(String email, String password) {
