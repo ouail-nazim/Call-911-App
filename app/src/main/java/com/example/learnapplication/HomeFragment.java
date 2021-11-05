@@ -37,6 +37,7 @@ public class HomeFragment extends Fragment {
         pager2.setAdapter(adapter);
         // Add tabs
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_fire_list));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_alert_fire));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_fire_my_account));
         // on tab click
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

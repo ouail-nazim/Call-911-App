@@ -14,9 +14,10 @@ public class FragmentAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position)
-        {
-            case 1 :
+        switch (position) {
+            case 1:
+                return new AlertFireFragment();
+            case 2:
                 return new MyAccountFragment();
         }
         return new FireListFragment();
@@ -24,6 +25,6 @@ public class FragmentAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 }
